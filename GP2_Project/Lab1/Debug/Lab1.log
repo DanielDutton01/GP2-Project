@@ -1,9 +1,2 @@
 ﻿C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\MSBuild\Microsoft\VC\v160\Microsoft.CppBuild.targets(452,5): warning MSB8028: The intermediate directory (Debug\) contains files shared from another project (Lab1.vcxproj).  This can lead to incorrect clean and rebuild behavior.
-  Game_Display_Class.cpp
-  Game_Mesh_Class.cpp
-  Game_Shader_Class.cpp
-  Game_Texture_Class.cpp
-  Main_Game_Class.cpp
-C:\Users\DDUTTO200\Documents\GitHub\GP2-Project\GP2_Project\Lab1\Main_Game_Class.cpp(8,2): error C2065:  'Display': undeclared identifier
-  Generating Code...
-C:\Users\DDUTTO200\Documents\GitHub\GP2-Project\GP2_Project\Lab1\Main_Game_Class.cpp(8,37): error C2061:  syntax error: identifier 'Display'
+  Lab1.vcxproj -> C:\Users\DDUTTO200\Documents\GitHub\GP2-Project\GP2_Project\Debug\GP2_Project.exe

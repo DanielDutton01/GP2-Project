@@ -2,11 +2,23 @@
 #include <iostream>
 #include <string>
 
+
+Vertex_Class vertices[] = { Vertex_Class(glm::vec3(-0.5, -0.5, 0), glm::vec2(0.0, 0.0)),
+					Vertex_Class(glm::vec3(0, 0.5, 0), glm::vec2(0.5, 1.0)),
+					Vertex_Class(glm::vec3(0.5, -0.5, 0), glm::vec2(1.0, 0.0)) };
+
+unsigned int indices[] = { 0, 1, 2 };
+
+Camera_Transform transform;
+
 Main_Game_Class::Main_Game_Class()
 {
 	_gameState = GameState::PLAY;
 	Game_Display_Class* _gameDisplay = new Game_Display_Class(); //new display
-	counter = 0.0f;
+	Game_Mesh_Class* mesh1();
+	Game_Mesh_Class* mesh2();
+	Game_Texture_Class* texture();
+	Game_Shader_Class* shader();
 }
 
 Main_Game_Class::~Main_Game_Class()
@@ -22,6 +34,14 @@ void Main_Game_Class::run()
 void Main_Game_Class::initSystems()
 {
 	_gameDisplay.initDisplay();
+
+	mesh2.loadModel("..\\res\\monkey3.obj");
+
+	texture.init("..\\res\\bricks.jpg"); //
+	shader.init("..\\res\\shader"); //new shader
+
+	myCamera.init_Game_Camera(glm::vec3(0, 0, -5), 70.0f, (float)_gameDisplay.getWidth() / _gameDisplay.getHeight(), 0.01f, 1000.0f);
+	counter = 0.0f;
 }
 
 void Main_Game_Class::gameLoop()
@@ -51,42 +71,17 @@ void Main_Game_Class::processInput()
 
 void Main_Game_Class::drawGame()
 {
-	_gameDisplay.clearDisplay();
-
-	Vertex_Class vertices[] = { Vertex_Class(glm::vec3(-0.5, -0.5, 0), glm::vec2(0.0, 0.0)),
-							Vertex_Class(glm::vec3(0, 0.5, 0), glm::vec2(0.5, 1.0)),
-							Vertex_Class(glm::vec3(0.5, -0.5, 0), glm::vec2(1.0, 0.0)) };
-	Vertex_Class vertices1[] = { Vertex_Class(glm::vec3(-0.5, -0.5, 0), glm::vec2(0.0, 0.0)),
-							Vertex_Class(glm::vec3(0, 0.5, 0), glm::vec2(0.5, 1.0)),
-							Vertex_Class(glm::vec3(0.5, -0.5, 0), glm::vec2(1.0, 0.0)) };
-
-	Game_Mesh_Class mesh(vertices, sizeof(vertices) / sizeof(vertices[0])); //size calcuated by number of bytes of an array / no bytes of one element
-
-	Game_Mesh_Class mesh1(vertices1, sizeof(vertices1) / sizeof(vertices1[0])); //size calcuated by number of bytes of an array / no bytes of one element
-
-	Shader shader("..\\res\\shader"); //new shader
-	Texture texture("..\\res\\bricks.jpg"); //load texture
-	Texture texture1("..\\res\\water.jpg"); //load texture
-	Transform transform;
+	_gameDisplay.clearDisplay(0.0f, 0.0f, 0.0f, 1.0f);
 
 	transform.SetPos(glm::vec3(sinf(counter), 0.0, 0.0));
 	transform.SetRot(glm::vec3(0.0, 0.0, counter * 5));
 	transform.SetScale(glm::vec3(sinf(counter), sinf(counter), sinf(counter)));
 
 	shader.Bind();
-	shader.Update(transform);
+	shader.Update(transform, myCamera);
 	texture.Bind(0);
-	mesh.Draw();
-
+	mesh2.draw();
 	counter = counter + 0.01f;
-
-	transform.SetPos(glm::vec3(-sinf(counter), 0.0, 0.0));
-	transform.SetRot(glm::vec3(0.0, 0.0, counter * 5));
-	transform.SetScale(glm::vec3(-sinf(counter), -sinf(counter), -sinf(counter)));
-
-	shader.Update(transform);
-	texture1.Bind(0);
-	mesh1.Draw();
 
 	glEnableClientState(GL_COLOR_ARRAY);
 	glEnd();

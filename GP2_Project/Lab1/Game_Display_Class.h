@@ -13,7 +13,10 @@ public:
 	~Game_Display_Class();
 	void initDisplay();
 	void swapBuffer();
-	void clearDisplay();
+	void clearDisplay(float r, float g, float b, float a);
+
+	float getWidth();
+	float getHeight();
 
 private:
 

@@ -2,10 +2,14 @@
 #include <iostream>
 #include <fstream>
 
-Game_Shader_Class::Game_Shader_Class(const std::string& filename)
+Game_Shader_Class::Game_Shader_Class()
+{
+}
+
+void Game_Shader_Class::init(const std::string& filename)
 {
 	program = glCreateProgram(); // create shader program (openGL saves as ref number)
-	shaders[0] = CreateShader(LoadShader("..\\res\\shader.vert"), GL_VERTEX_SHADER); // create vertex shader
+	shaders[0] = CreateShader(LoadShader("..\\res\\\shader.vert"), GL_VERTEX_SHADER); // create vertex shader
 	shaders[1] = CreateShader(LoadShader("..\\res\\shader.frag"), GL_FRAGMENT_SHADER); // create fragment shader
 
 	for (unsigned int i = 0; i < NUM_SHADERS; i++)
@@ -25,7 +29,6 @@ Game_Shader_Class::Game_Shader_Class(const std::string& filename)
 	uniforms[TRANSFORM_U] = glGetUniformLocation(program, "transform"); // associate with the location of uniform variable within a program
 }
 
-
 Game_Shader_Class::~Game_Shader_Class()
 {
 	for (unsigned int i = 0; i < NUM_SHADERS; i++)
@@ -41,10 +44,10 @@ void Game_Shader_Class::Bind()
 	glUseProgram(program); //installs the program object specified by program as part of rendering state
 }
 
-void Game_Shader_Class::Update(const Camera_Transform& transform)
+void Game_Shader_Class::Update(const Camera_Transform& transform, const Game_Camera& camera)
 {
-	glm::mat4 model = transform.GetModel();
-	glUniformMatrix4fv(uniforms[TRANSFORM_U], 1, GLU_FALSE, &model[0][0]);
+	glm::mat4 mvp = camera.GetViewProjection() * transform.GetModel();
+	glUniformMatrix4fv(uniforms[TRANSFORM_U], 1, GLU_FALSE, &mvp[0][0]);
 }
 
 

@@ -6,10 +6,11 @@
 class Game_Shader_Class
 {
 public:
-	Game_Shader_Class(const std::string& filename);
+	Game_Shader_Class();
 
 	void Bind(); //Set gpu to use our shaders
-	void Update(const Camera_Transform& transform);
+	void Update(const Camera_Transform& transform, const Game_Camera& camera);
+	void init(const std::string& filename);
 
 	std::string Game_Shader_Class::LoadShader(const std::string& fileName);
 	void Game_Shader_Class::CheckShaderError(GLuint shader, GLuint flag, bool isProgram, const std::string& errorMessage);

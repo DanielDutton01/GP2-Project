@@ -2,7 +2,11 @@
 #include <cassert>
 #include <iostream>
 
-Game_Texture_Class::Game_Texture_Class(const std::string& fileName)
+Game_Texture_Class::Game_Texture_Class()
+{
+}
+
+void Game_Texture_Class::init(const std::string& fileName)
 {
 	int width, height, numComponents; //width, height, and no of components of image
 	unsigned char* imageData = stbi_load((fileName).c_str(), &width, &height, &numComponents, 4); //load the image and store the data

@@ -1,7 +1,7 @@
 #pragma once
 #include <glm/glm.hpp>
 #include <glm/gtx/transform.hpp>
-//#include "camera.h"
+#include "Game_Camera.h"
 
 struct Camera_Transform
 {

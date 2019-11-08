@@ -78,6 +78,7 @@
     <ClCompile Include="Game_Texture_Class.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Main_Game_Class.cpp" />
+    <ClCompile Include="obj_loader.cpp" />
     <ClCompile Include="stb_image.c" />
   </ItemGroup>
   <ItemGroup>
@@ -88,11 +89,17 @@
     <ClInclude Include="Game_Shader_Class.h" />
     <ClInclude Include="Game_Texture_Class.h" />
     <ClInclude Include="Main_Game_Class.h" />
+    <ClInclude Include="obj_loader.h" />
     <ClInclude Include="stb_image.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\res\shader.frag" />
     <None Include="..\res\shader.vert" />
+  </ItemGroup>
+  <ItemGroup>
+    <Object Include="..\res\monkey3.obj">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+    </Object>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
