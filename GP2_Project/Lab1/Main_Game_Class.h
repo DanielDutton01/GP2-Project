@@ -7,7 +7,7 @@
 #include "Game_Texture_Class.h"
 #include "Game_Camera_Transform.h"
 
-enum class GameState { PLAY, EXIT };
+enum class GameState { PLAY, EXIT, FORWARD, BACK, RIGHT, LEFT};
 
 class Main_Game_Class
 {
@@ -34,7 +34,6 @@ private:
 
 
 	float counter;
-
 };
 
 

@@ -50,6 +50,22 @@ void Main_Game_Class::gameLoop()
 	{
 		processInput();
 		drawGame();
+		if (_gameState == GameState::FORWARD)// if key is pressed then move forward
+		{
+			myCamera.MoveForward(0.1);
+		}
+		else if (_gameState == GameState::BACK)// if key is pressed then move back
+		{
+			myCamera.MoveForward(-0.1);
+		}
+		else if (_gameState == GameState::LEFT)// if key is pressed then move left
+		{
+			myCamera.MoveRight(0.1);
+		}
+		else if (_gameState == GameState::RIGHT)// if key is pressed then move right
+		{
+			myCamera.MoveRight(-0.1);
+		}
 	}
 }
 
@@ -64,6 +80,27 @@ void Main_Game_Class::processInput()
 		case SDL_QUIT:
 			_gameState = GameState::EXIT;
 			break;
+		case SDL_KEYDOWN:
+			if (evnt.key.keysym.sym == SDLK_w)
+			{
+				_gameState = GameState::FORWARD;
+			}
+			if (evnt.key.keysym.sym == SDLK_s)
+			{
+				_gameState = GameState::BACK;
+			}
+			if (evnt.key.keysym.sym == SDLK_a)
+			{
+				_gameState = GameState::LEFT;
+			}
+			if (evnt.key.keysym.sym == SDLK_d)
+			{
+				_gameState = GameState::RIGHT;
+			}
+				break;
+		case SDL_KEYUP:
+			_gameState = GameState::PLAY;
+				break;
 		}
 	}
 

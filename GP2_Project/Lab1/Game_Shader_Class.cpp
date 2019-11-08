@@ -9,8 +9,8 @@ Game_Shader_Class::Game_Shader_Class()
 void Game_Shader_Class::init(const std::string& filename)
 {
 	program = glCreateProgram(); // create shader program (openGL saves as ref number)
-	shaders[0] = CreateShader(LoadShader("..\\res\\\shader.vert"), GL_VERTEX_SHADER); // create vertex shader
-	shaders[1] = CreateShader(LoadShader("..\\res\\shader.frag"), GL_FRAGMENT_SHADER); // create fragment shader
+	shaders[0] = CreateShader(LoadShader(filename + ".vert"), GL_VERTEX_SHADER); // create vertex shader
+	shaders[1] = CreateShader(LoadShader(filename + ".frag"), GL_FRAGMENT_SHADER); // create fragment shader
 
 	for (unsigned int i = 0; i < NUM_SHADERS; i++)
 	{
