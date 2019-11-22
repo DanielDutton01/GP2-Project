@@ -16,6 +16,7 @@ public:
 	~Main_Game_Class();
 
 	void run();
+	bool colCheck(glm::vec3 m1Pos, float m1Rad, glm::vec3 m2Pos, float m2Rad);
 
 private:
 

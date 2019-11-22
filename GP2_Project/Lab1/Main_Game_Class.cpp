@@ -31,6 +31,21 @@ void Main_Game_Class::run()
 	gameLoop();
 }
 
+bool Main_Game_Class::colCheck(glm::vec3 m1Pos, float m1Rad, glm::vec3 m2Pos, float m2Rad)
+{
+	float dis = m1Rad + m2Rad;
+	float totalD = glm::sqrt((m2Pos.x-m1Pos.x)*(m2Pos.x - m1Pos.x) + (m2Pos.y - m1Pos.y)*(m2Pos.y - m1Pos.y) + (m2Pos.z - m1Pos.z)*(m2Pos.z - m1Pos.z));
+
+	if (totalD <= dis)
+	{
+		return true;
+	}
+	else
+	{
+		return false;
+	}
+}
+
 void Main_Game_Class::initSystems()
 {
 	_gameDisplay.initDisplay();

@@ -10,7 +10,7 @@ void Game_Mesh_Class::init(Vertex_Class* vertices, unsigned int numVertices, uns
 	{
 		model.positions.push_back(*vertices[i].GetPos());
 		model.texCoords.push_back(*vertices[i].GetTexCoord());
-		//model.normals.push_back(*vertices[i].GetNormal());
+		model.normals.push_back(*vertices[i].GetNormal());
 	}
 
 	for (unsigned int i = 0; i < numIndices; i++)
@@ -18,6 +18,23 @@ void Game_Mesh_Class::init(Vertex_Class* vertices, unsigned int numVertices, uns
 
 	initModel(model);
 }
+
+Sphere::Sphere()
+{
+	
+}
+
+glm::vec3 Game_Mesh_Class::GetSpherePos()
+{
+
+}
+
+float Game_Mesh_Class::GetSphereRad()
+{
+
+}
+
+
 
 void Game_Mesh_Class::initModel(const IndexedModel& model)
 {

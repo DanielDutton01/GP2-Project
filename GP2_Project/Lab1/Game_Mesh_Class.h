@@ -34,6 +34,12 @@ public:
 	void init(Vertex_Class* vertices, unsigned int numVertices, unsigned int* indices, unsigned int numIndices);
 	void loadModel(const std::string& filename);
 	void initModel(const IndexedModel& model);
+
+	Sphere meshSphere;
+	
+	glm::vec3 GetSpherePos() { meshSphere.GetPos; }
+	float GetSphereRad() { meshSphere.GetRad; }
+
 private:
 
 	enum
@@ -48,5 +54,24 @@ private:
 	GLuint vertexArrayObject;
 	GLuint vertexArrayBuffers[NUM_BUFFERS]; // create our array of buffers
 	unsigned int drawCount; //how much of the vertexArrayObject do we want to draw
+
 };
 
+struct Sphere
+{
+public:
+	Sphere();
+
+	Sphere(glm::vec3& position, float radius)
+	{
+		this->position = position;
+		this->radius = radius;
+	}
+
+	glm::vec3* GetPos() { return &position; }
+	float* GetRad() { return &radius; }
+
+private:
+	glm::vec3 position;
+	float radius;
+};

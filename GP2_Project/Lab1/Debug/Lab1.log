@@ -1,7 +1,22 @@
 ﻿C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\MSBuild\Microsoft\VC\v160\Microsoft.CppBuild.targets(452,5): warning MSB8028: The intermediate directory (Debug\) contains files shared from another project (Lab1.vcxproj).  This can lead to incorrect clean and rebuild behavior.
+  Game_Mesh_Class.cpp
+C:\Users\ddutto200\Documents\GitHub\GP2-Project\GP2_Project\Lab1\Game_Mesh_Class.h(57,27): error C3867:  'Sphere::GetPos': non-standard syntax; use '&' to create a pointer to member
+C:\Users\ddutto200\Documents\GitHub\GP2-Project\GP2_Project\Lab1\Game_Mesh_Class.h(58,23): error C3867:  'Sphere::GetRad': non-standard syntax; use '&' to create a pointer to member
+C:\Users\ddutto200\Documents\GitHub\GP2-Project\GP2_Project\Lab1\Game_Mesh_Class.cpp(11,50): error C2100:  illegal indirection
+C:\Users\ddutto200\Documents\GitHub\GP2-Project\GP2_Project\Lab1\Game_Mesh_Class.cpp(12,55): error C2100:  illegal indirection
+C:\Users\ddutto200\Documents\GitHub\GP2-Project\GP2_Project\Lab1\Game_Mesh_Class.cpp(13,51): error C2100:  illegal indirection
+C:\Users\ddutto200\Documents\GitHub\GP2-Project\GP2_Project\Lab1\Game_Mesh_Class.cpp(28,1): error C2084:  function 'glm::vec3 Game_Mesh_Class::GetSpherePos(void)' already has a body
+C:\Users\ddutto200\Documents\GitHub\GP2-Project\GP2_Project\Lab1\Game_Mesh_Class.h(57): message :  see previous definition of 'GetSpherePos'
+C:\Users\ddutto200\Documents\GitHub\GP2-Project\GP2_Project\Lab1\Game_Mesh_Class.cpp(33,1): error C2084:  function 'float Game_Mesh_Class::GetSphereRad(void)' already has a body
+  main.cpp
+C:\Users\ddutto200\Documents\GitHub\GP2-Project\GP2_Project\Lab1\Game_Mesh_Class.h(58): message :  see previous definition of 'GetSphereRad'
+C:\Users\ddutto200\Documents\GitHub\GP2-Project\GP2_Project\Lab1\Game_Mesh_Class.h(57,27): error C3867:  'Sphere::GetPos': non-standard syntax; use '&' to create a pointer to member
   Main_Game_Class.cpp
-C:\Users\DDUTTO200\Documents\GitHub\GP2-Project\GP2_Project\Lab1\Main_Game_Class.cpp(55,28): warning C4305:  'argument': truncation from 'double' to 'float'
-C:\Users\DDUTTO200\Documents\GitHub\GP2-Project\GP2_Project\Lab1\Main_Game_Class.cpp(59,29): warning C4305:  'argument': truncation from 'double' to 'float'
-C:\Users\DDUTTO200\Documents\GitHub\GP2-Project\GP2_Project\Lab1\Main_Game_Class.cpp(63,26): warning C4305:  'argument': truncation from 'double' to 'float'
-C:\Users\DDUTTO200\Documents\GitHub\GP2-Project\GP2_Project\Lab1\Main_Game_Class.cpp(67,27): warning C4305:  'argument': truncation from 'double' to 'float'
-  Lab1.vcxproj -> C:\Users\DDUTTO200\Documents\GitHub\GP2-Project\GP2_Project\Debug\GP2_Project.exe
+C:\Users\ddutto200\Documents\GitHub\GP2-Project\GP2_Project\Lab1\Game_Mesh_Class.h(58,23): error C3867:  'Sphere::GetRad': non-standard syntax; use '&' to create a pointer to member
+C:\Users\ddutto200\Documents\GitHub\GP2-Project\GP2_Project\Lab1\Game_Mesh_Class.h(57,27): error C3867:  'Sphere::GetPos': non-standard syntax; use '&' to create a pointer to member
+C:\Users\ddutto200\Documents\GitHub\GP2-Project\GP2_Project\Lab1\Game_Mesh_Class.h(58,23): error C3867:  'Sphere::GetRad': non-standard syntax; use '&' to create a pointer to member
+C:\Users\ddutto200\Documents\GitHub\GP2-Project\GP2_Project\Lab1\Main_Game_Class.cpp(70,28): warning C4305:  'argument': truncation from 'double' to 'float'
+C:\Users\ddutto200\Documents\GitHub\GP2-Project\GP2_Project\Lab1\Main_Game_Class.cpp(74,29): warning C4305:  'argument': truncation from 'double' to 'float'
+C:\Users\ddutto200\Documents\GitHub\GP2-Project\GP2_Project\Lab1\Main_Game_Class.cpp(78,26): warning C4305:  'argument': truncation from 'double' to 'float'
+  Generating Code...
+C:\Users\ddutto200\Documents\GitHub\GP2-Project\GP2_Project\Lab1\Main_Game_Class.cpp(82,27): warning C4305:  'argument': truncation from 'double' to 'float'
