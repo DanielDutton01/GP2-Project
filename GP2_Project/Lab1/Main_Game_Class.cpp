@@ -10,15 +10,18 @@ Vertex_Class vertices[] = { Vertex_Class(glm::vec3(-0.5, -0.5, 0), glm::vec2(0.0
 unsigned int indices[] = { 0, 1, 2 };
 
 Camera_Transform transform;
+Camera_Transform npc_transform;
 
 Main_Game_Class::Main_Game_Class()
 {
 	_gameState = GameState::PLAY;
 	Game_Display_Class* _gameDisplay = new Game_Display_Class(); //new display
-	Game_Mesh_Class* mesh1();
-	Game_Mesh_Class* mesh2();
+	Game_Mesh_Class* player();
+	Game_Mesh_Class* npc();
 	Game_Texture_Class* texture();
 	Game_Shader_Class* shader();
+	Game_Texture_Class* texture2();
+	Game_Shader_Class* shader2();
 }
 
 Main_Game_Class::~Main_Game_Class()
@@ -46,17 +49,33 @@ bool Main_Game_Class::colCheck(glm::vec3 m1Pos, float m1Rad, glm::vec3 m2Pos, fl
 	}
 }
 
+
 void Main_Game_Class::initSystems()
 {
 	_gameDisplay.initDisplay();
 
-	mesh2.loadModel("..\\res\\monkey3.obj");
+	myCamera.init_Game_Camera(glm::vec3(0, 0, -12), 70.0f, (float)_gameDisplay.getWidth() / _gameDisplay.getHeight(), 0.01f, 1000.0f);
+	counterX = 0.0f;
+	counterSpeed = 0.0f;
 
-	texture.init("..\\res\\bricks.jpg"); //
+	//player starting information
+	player.loadModel("..\\res\\monkey3.obj");
+	texture.init("..\\res\\rainbow.png"); //
 	shader.init("..\\res\\shader"); //new shader
 
-	myCamera.init_Game_Camera(glm::vec3(0, 0, -5), 70.0f, (float)_gameDisplay.getWidth() / _gameDisplay.getHeight(), 0.01f, 1000.0f);
-	counter = 0.0f;
+	transform.SetPos(glm::vec3(0.0, 0.0, 0.0));
+	transform.SetRot(glm::vec3(0.0, 0.0, 0.0));
+	transform.SetScale(glm::vec3(sinf(1), sinf(1), sinf(1)));
+
+	//npc starting info
+	npc.loadModel("..\\res\\monkey3.obj");
+	texture2.init("..\\res\\rainbow.png"); //
+	shader2.init("..\\res\\shader"); //new shader
+
+	npc_transform.SetPos(glm::vec3(0.0, 0.0, 0.0));
+	npc_transform.SetRot(glm::vec3(0.0, 0.0, 0.0));
+	npc_transform.SetScale(glm::vec3(sinf(1), sinf(1), sinf(1)));
+
 }
 
 void Main_Game_Class::gameLoop()
@@ -65,23 +84,52 @@ void Main_Game_Class::gameLoop()
 	{
 		processInput();
 		drawGame();
-		if (_gameState == GameState::FORWARD)// if key is pressed then move forward
-		{
-			myCamera.MoveForward(0.1);
-		}
-		else if (_gameState == GameState::BACK)// if key is pressed then move back
-		{
-			myCamera.MoveForward(-0.1);
-		}
-		else if (_gameState == GameState::LEFT)// if key is pressed then move left
-		{
-			myCamera.MoveRight(0.1);
-		}
-		else if (_gameState == GameState::RIGHT)// if key is pressed then move right
-		{
-			myCamera.MoveRight(-0.1);
-		}
+		update();
 	}
+}
+
+void Main_Game_Class::update()
+{
+	if (_gameState == GameState::FORWARD)// if key is pressed then move forward
+	{
+		playerPosX += sin((counterX)) * counterSpeed;
+		playerPosY += cos((counterX)) * counterSpeed;
+
+
+
+		transform.SetPos(glm::vec3(playerPosX, playerPosY, 0.0));
+		counterSpeed = counterSpeed + 0.1f;
+		if (counterSpeed > 0.1) { counterSpeed = 0.1; }
+		//myCamera.init_Game_Camera(glm::vec3(playerPosX, playerPosY, -12), 70.0f, (float)_gameDisplay.getWidth() / _gameDisplay.getHeight(), 0.01f, 1000.0f); //move cam with player
+	}
+	else if (_gameState == GameState::BACK)// if key is pressed then move back
+	{
+
+		playerPosX -= sin((counterX)) * -counterSpeed;
+		playerPosY -= cos((counterX)) * -counterSpeed;
+		
+		transform.SetPos(glm::vec3(playerPosX, playerPosY, 0.0));
+		counterSpeed = counterSpeed - 0.1f;
+		if (counterSpeed < -0.1) { counterSpeed = -0.1; }
+		//myCamera.init_Game_Camera(glm::vec3(playerPosX, playerPosY, -12), 70.0f, (float)_gameDisplay.getWidth() / _gameDisplay.getHeight(), 0.01f, 1000.0f); //move cam with player
+	}
+	else if (_gameState == GameState::LEFT)// if key is pressed then turn left
+	{
+		transform.SetRot(glm::vec3(0.0, 0.0, counterX * -1));
+		counterX = counterX + 0.1f;
+	}
+	else if (_gameState == GameState::RIGHT)// if key is pressed then turn right
+	{
+		transform.SetRot(glm::vec3(0.0, 0.0, counterX * -1));
+		counterX = counterX - 0.1f;
+	}
+
+		npcPosX += sin(npcRot) * 0.3;
+		npcPosY += cos(npcRot) * 0.3;
+		npcRot += 0.1;
+
+		npc_transform.SetRot(glm::vec3(0.0, 0.0, npcRot * -1));
+		npc_transform.SetPos(glm::vec3(npcPosX, npcPosY, 0.0));
 }
 
 void Main_Game_Class::processInput()
@@ -112,6 +160,7 @@ void Main_Game_Class::processInput()
 			{
 				_gameState = GameState::RIGHT;
 			}
+
 				break;
 		case SDL_KEYUP:
 			_gameState = GameState::PLAY;
@@ -125,16 +174,16 @@ void Main_Game_Class::drawGame()
 {
 	_gameDisplay.clearDisplay(0.0f, 0.0f, 0.0f, 1.0f);
 
-	transform.SetPos(glm::vec3(sinf(counter), 0.0, 0.0));
-	transform.SetRot(glm::vec3(0.0, 0.0, counter * 5));
-	transform.SetScale(glm::vec3(sinf(counter), sinf(counter), sinf(counter)));
-
 	shader.Bind();
 	shader.Update(transform, myCamera);
 	texture.Bind(0);
-	mesh2.draw();
-	counter = counter + 0.01f;
+	player.draw();
 
+	shader2.Bind();
+	shader.Update(npc_transform, myCamera);
+	texture2.Bind(0);
+	npc.draw();
+	
 	glEnableClientState(GL_COLOR_ARRAY);
 	glEnd();
 

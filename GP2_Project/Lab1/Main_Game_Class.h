@@ -24,17 +24,32 @@ private:
 	void processInput();
 	void gameLoop();
 	void drawGame();
+	void update();
 
 	Game_Display_Class _gameDisplay;
 	GameState _gameState;
-	Game_Mesh_Class mesh1;
-	Game_Mesh_Class mesh2;
 	Game_Camera myCamera;
+
+	Game_Mesh_Class player;
 	Game_Texture_Class texture;
 	Game_Shader_Class shader;
 
+	float playerPosX;
+	float playerPosY;
+	float playerRot;
+	float playerScale;
 
-	float counter;
+	Game_Mesh_Class npc;
+	Game_Texture_Class texture2;
+	Game_Shader_Class shader2;
+
+	float npcPosX;
+	float npcPosY;
+	float npcRot;
+	float npcScale;
+
+	float counterX;
+	float counterSpeed;
 };
 
 

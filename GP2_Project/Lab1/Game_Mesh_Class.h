@@ -35,10 +35,10 @@ public:
 	void loadModel(const std::string& filename);
 	void initModel(const IndexedModel& model);
 
-	Sphere meshSphere;
-	
-	glm::vec3 GetSpherePos() { meshSphere.GetPos; }
-	float GetSphereRad() { meshSphere.GetRad; }
+	//Sphere meshSphere;
+
+	//glm::vec3 GetSpherePos() { meshSphere.GetPos; }
+	//float GetSphereRad() { meshSphere.GetRad; }
 
 private:
 
@@ -56,7 +56,7 @@ private:
 	unsigned int drawCount; //how much of the vertexArrayObject do we want to draw
 
 };
-
+/*
 struct Sphere
 {
 public:
@@ -74,4 +74,4 @@ public:
 private:
 	glm::vec3 position;
 	float radius;
-};
+};*/

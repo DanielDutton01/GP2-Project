@@ -18,7 +18,7 @@ void Game_Mesh_Class::init(Vertex_Class* vertices, unsigned int numVertices, uns
 
 	initModel(model);
 }
-
+/*
 Sphere::Sphere()
 {
 	
@@ -32,7 +32,7 @@ glm::vec3 Game_Mesh_Class::GetSpherePos()
 float Game_Mesh_Class::GetSphereRad()
 {
 
-}
+}*/
 
 
 
