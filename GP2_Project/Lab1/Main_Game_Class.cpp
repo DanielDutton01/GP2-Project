@@ -95,8 +95,6 @@ void Main_Game_Class::update()
 		playerPosX += sin((counterX)) * counterSpeed;
 		playerPosY += cos((counterX)) * counterSpeed;
 
-
-
 		transform.SetPos(glm::vec3(playerPosX, playerPosY, 0.0));
 		counterSpeed = counterSpeed + 0.1f;
 		if (counterSpeed > 0.1) { counterSpeed = 0.1; }
@@ -124,12 +122,31 @@ void Main_Game_Class::update()
 		counterX = counterX - 0.1f;
 	}
 
-		npcPosX += sin(npcRot) * 0.3;
-		npcPosY += cos(npcRot) * 0.3;
-		npcRot += 0.1;
+
+
+
+	if (npcPosY < 5)
+	{
+		npcPosX += sin(npcRot) * speed;
+		npcPosY += cos(npcRot) * speed;
+	}
+	else if(npcPosY>=5 || npcPosY<=-6)
+	{
+		npcPosY = -1 * (rand()%5+1);
+		npcPosX = 1 * (rand() % 5 + 1);
+		
+		if ((rand() % 2 + 1) == 1)
+		{
+			//npcPosY = npcPosY * -1;
+			npcPosX = npcPosX * -1;
+		}
+	}
+
 
 		npc_transform.SetRot(glm::vec3(0.0, 0.0, npcRot * -1));
 		npc_transform.SetPos(glm::vec3(npcPosX, npcPosY, 0.0));
+
+		//npcRot += 0.1;
 }
 
 void Main_Game_Class::processInput()

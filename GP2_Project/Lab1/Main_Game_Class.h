@@ -39,6 +39,8 @@ private:
 	float playerRot;
 	float playerScale;
 
+	float speed = 0.1;
+
 	Game_Mesh_Class npc;
 	Game_Texture_Class texture2;
 	Game_Shader_Class shader2;
