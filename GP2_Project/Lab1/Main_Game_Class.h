@@ -5,7 +5,9 @@
 #include "Game_Shader_Class.h"
 #include "Game_Mesh_Class.h"
 #include "Game_Texture_Class.h"
+#include "Game_Camera.h"
 #include "Game_Camera_Transform.h"
+#include "Game_Audio_Class.h"
 
 enum class GameState { PLAY, EXIT, FORWARD, BACK, RIGHT, LEFT};
 
@@ -16,7 +18,6 @@ public:
 	~Main_Game_Class();
 
 	void run();
-	bool colCheck(glm::vec3 m1Pos, float m1Rad, glm::vec3 m2Pos, float m2Rad);
 
 private:
 
@@ -25,6 +26,8 @@ private:
 	void gameLoop();
 	void drawGame();
 	void update();
+	bool collision(glm::vec3 m1Pos, float m1Rad, glm::vec3 m2Pos, float m2Rad);
+	void playAudio(unsigned int Source, glm::vec3 pos);
 
 	Game_Display_Class _gameDisplay;
 	GameState _gameState;
@@ -33,6 +36,10 @@ private:
 	Game_Mesh_Class player;
 	Game_Texture_Class texture;
 	Game_Shader_Class shader;
+	Game_Audio_Class device;
+
+	unsigned int sfx;
+	unsigned int bkgMusic;
 
 	float playerPosX;
 	float playerPosY;
@@ -41,14 +48,23 @@ private:
 
 	float speed = 0.1;
 
-	Game_Mesh_Class npc;
+	Game_Mesh_Class obstacle;
 	Game_Texture_Class texture2;
 	Game_Shader_Class shader2;
 
-	float npcPosX;
-	float npcPosY;
-	float npcRot;
-	float npcScale;
+	float obstaclePosX;
+	float obstaclePosY;
+	float obstacleRot;
+	float obstacleScale;
+
+	Game_Mesh_Class planet;
+	Game_Texture_Class texture3;
+	Game_Shader_Class shader3;
+
+	float planetPosX;
+	float planetPosY;
+	float planetRot;
+	float planetScale;
 
 	float counterX;
 	float counterSpeed;

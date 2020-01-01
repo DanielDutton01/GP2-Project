@@ -39,6 +39,9 @@
     <ClCompile Include="obj_loader.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Game_Audio_Class.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stb_image.h">
@@ -68,6 +71,9 @@
     <ClInclude Include="obj_loader.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Game_Audio_Class.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\res\shader.frag">
@@ -79,6 +85,15 @@
   </ItemGroup>
   <ItemGroup>
     <Object Include="..\res\monkey3.obj">
+      <Filter>Resource Files</Filter>
+    </Object>
+    <Object Include="..\res\Rocket.obj">
+      <Filter>Resource Files</Filter>
+    </Object>
+    <Object Include="..\res\Rock.obj">
+      <Filter>Resource Files</Filter>
+    </Object>
+    <Object Include="..\res\Planet.obj">
       <Filter>Resource Files</Filter>
     </Object>
   </ItemGroup>

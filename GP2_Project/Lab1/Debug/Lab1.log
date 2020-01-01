@@ -1,8 +1,14 @@
-﻿C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\MSBuild\Microsoft\VC\v160\Microsoft.CppBuild.targets(452,5): warning MSB8028: The intermediate directory (Debug\) contains files shared from another project (Lab1.vcxproj).  This can lead to incorrect clean and rebuild behavior.
+﻿C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\MSBuild\Microsoft\VC\v160\Microsoft.CppBuild.targets(459,5): warning MSB8028: The intermediate directory (Debug\) contains files shared from another project (Lab1.vcxproj).  This can lead to incorrect clean and rebuild behavior.
   Main_Game_Class.cpp
-C:\Users\DDUTTO200\Documents\GitHub\GP2-Project\GP2_Project\Lab1\Main_Game_Class.h(42,19): warning C4305:  'initializing': truncation from 'double' to 'float'
-C:\Users\DDUTTO200\Documents\GitHub\GP2-Project\GP2_Project\Lab1\Main_Game_Class.cpp(100,47): warning C4305:  '=': truncation from 'double' to 'float'
-C:\Users\DDUTTO200\Documents\GitHub\GP2-Project\GP2_Project\Lab1\Main_Game_Class.cpp(111,49): warning C4305:  '=': truncation from 'double' to 'float'
-C:\Users\DDUTTO200\Documents\GitHub\GP2-Project\GP2_Project\Lab1\Main_Game_Class.cpp(135,16): warning C4244:  '=': conversion from 'int' to 'float', possible loss of data
-C:\Users\DDUTTO200\Documents\GitHub\GP2-Project\GP2_Project\Lab1\Main_Game_Class.cpp(136,15): warning C4244:  '=': conversion from 'int' to 'float', possible loss of data
-  Lab1.vcxproj -> C:\Users\DDUTTO200\Documents\GitHub\GP2-Project\GP2_Project\Debug\GP2_Project.exe
+E:\Programming\GP2-Project\GP2_Project\Lab1\Main_Game_Class.h(49,19): warning C4305: 'initializing': truncation from 'double' to 'float'
+E:\Programming\GP2-Project\GP2_Project\Lab1\Main_Game_Class.cpp(79,46): warning C4305: 'argument': truncation from 'double' to 'float'
+E:\Programming\GP2-Project\GP2_Project\Lab1\Main_Game_Class.cpp(79,57): warning C4305: 'argument': truncation from 'double' to 'float'
+E:\Programming\GP2-Project\GP2_Project\Lab1\Main_Game_Class.cpp(79,68): warning C4305: 'argument': truncation from 'double' to 'float'
+E:\Programming\GP2-Project\GP2_Project\Lab1\Main_Game_Class.cpp(104,47): warning C4305: '=': truncation from 'double' to 'float'
+E:\Programming\GP2-Project\GP2_Project\Lab1\Main_Game_Class.cpp(114,49): warning C4305: '=': truncation from 'double' to 'float'
+E:\Programming\GP2-Project\GP2_Project\Lab1\Main_Game_Class.cpp(138,20): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+E:\Programming\GP2-Project\GP2_Project\Lab1\Main_Game_Class.cpp(145,37): warning C4244: '+=': conversion from 'double' to 'float', possible loss of data
+E:\Programming\GP2-Project\GP2_Project\Lab1\Main_Game_Class.cpp(146,37): warning C4244: '+=': conversion from 'double' to 'float', possible loss of data
+E:\Programming\GP2-Project\GP2_Project\Lab1\Main_Game_Class.cpp(147,19): warning C4305: '+=': truncation from 'double' to 'float'
+E:\Programming\GP2-Project\GP2_Project\Lab1\Main_Game_Class.cpp(209,20): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+  Lab1.vcxproj -> E:\Programming\GP2-Project\GP2_Project\Debug\GP2_Project.exe

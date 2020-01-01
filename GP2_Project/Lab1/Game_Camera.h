@@ -21,6 +21,11 @@ public:
 	{
 		return projection * glm::lookAt(pos, pos + forward, up);
 	}
+
+	glm::vec3 getPos()
+	{
+		return this->pos;
+	}
 	
 	void MoveForward(float amt)
 	{

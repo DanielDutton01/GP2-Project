@@ -18,22 +18,6 @@ void Game_Mesh_Class::init(Vertex_Class* vertices, unsigned int numVertices, uns
 
 	initModel(model);
 }
-/*
-Sphere::Sphere()
-{
-	
-}
-
-glm::vec3 Game_Mesh_Class::GetSpherePos()
-{
-
-}
-
-float Game_Mesh_Class::GetSphereRad()
-{
-
-}*/
-
 
 
 void Game_Mesh_Class::initModel(const IndexedModel& model)
@@ -91,4 +75,10 @@ void Game_Mesh_Class::draw()
 	//glDrawArrays(GL_TRIANGLES, 0, drawCount);
 
 	glBindVertexArray(0);
+}
+
+void Game_Mesh_Class::updateSphereData(glm::vec3 pos, float radius)
+{
+	meshSphere.SetPos(pos);
+	meshSphere.SetRadius(radius);
 }
