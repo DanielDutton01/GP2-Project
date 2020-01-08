@@ -98,10 +98,13 @@
   <ItemGroup>
     <None Include="..\res\shader.frag" />
     <None Include="..\res\shader.vert" />
+    <None Include="..\res\skyboxshader.frag" />
+    <None Include="..\res\skyboxshader.vert" />
   </ItemGroup>
   <ItemGroup>
-    <Object Include="..\res\monkey3.obj">
+    <Object Include="..\res\cube.obj">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
     </Object>
     <Object Include="..\res\Planet.obj">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>

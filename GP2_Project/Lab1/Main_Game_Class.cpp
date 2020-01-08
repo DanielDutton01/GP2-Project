@@ -2,16 +2,11 @@
 #include <iostream>
 #include <string>
 
-
 Vertex_Class vertices[] = { Vertex_Class(glm::vec3(-0.5, -0.5, 0), glm::vec2(0.0, 0.0)),
-					Vertex_Class(glm::vec3(0, 0.5, 0), glm::vec2(0.5, 1.0)),
-					Vertex_Class(glm::vec3(0.5, -0.5, 0), glm::vec2(1.0, 0.0)) };
+				Vertex_Class(glm::vec3(0, 0.5, 0), glm::vec2(0.5, 1.0)),
+				Vertex_Class(glm::vec3(0.5, -0.5, 0), glm::vec2(1.0, 0.0)) };
 
 unsigned int indices[] = { 0, 1, 2 };
-
-Camera_Transform transform;
-Camera_Transform obstacle_transform;
-Camera_Transform planet_transform;
 
 Main_Game_Class::Main_Game_Class()
 {
@@ -26,6 +21,9 @@ Main_Game_Class::Main_Game_Class()
 	Game_Shader_Class* shader2();
 	Game_Texture_Class* texture3();
 	Game_Shader_Class* shader3();
+	Game_Mesh_Class* skybox();
+	Game_Texture_Class* skyboxTex();
+	Game_Shader_Class* skyShader();
 	Game_Audio_Class* device();
 }
 
@@ -46,48 +44,57 @@ void Main_Game_Class::initSystems()
 	myCamera.init_Game_Camera(glm::vec3(0, 0, -12), 70.0f, (float)_gameDisplay.getWidth() / _gameDisplay.getHeight(), 0.01f, 1000.0f);
 	counterX = 0.0f;
 	counterSpeed = 0.0f;
-
+	//sets the audio to the appropriate files
 	bkgMusic = device.loadSound("..\\res\\bkgMusic.wav");
 	sfx = device.loadSound("..\\res\\hit.wav");
 
-	//player starting information
+	//player starting information is set
 	player.loadModel("..\\res\\Rocket.obj");
-	texture.init("..\\res\\rainbow.png"); //
+	texture.init("..\\res\\metal.png"); //
 	shader.init("..\\res\\shader"); //new shader
-
+	//sets models starting position, rotation & scale
 	transform.SetPos(glm::vec3(0.0, 0.0, 0.0));
 	transform.SetRot(glm::vec3(0.0, 0.0, 0.0));
 	transform.SetScale(glm::vec3(sinf(1), sinf(1), sinf(1)));
 
-	//obstacle starting info
+	//obstacle starting info is set
 	obstacle.loadModel("..\\res\\Rock.obj");
-	texture2.init("..\\res\\rainbow.png"); //
+	texture2.init("..\\res\\rock.png"); //
 	shader2.init("..\\res\\shader"); //new shader
-
+	//sets models starting position, rotation & scale
 	obstacle_transform.SetPos(glm::vec3(0.0, -5.0, 0.0));
 	obstacle_transform.SetRot(glm::vec3(0.0, 0.0, 0.0));
 	obstacle_transform.SetScale(glm::vec3(sinf(1), sinf(1), sinf(1)));
 	obstaclePosY = -5;
 
-	//planet starting info
+	//planet starting info is set
 	planet.loadModel("..\\res\\Planet.obj");
-	texture3.init("..\\res\\rainbow.png"); //
+	texture3.init("..\\res\\planet.png"); //
 	shader3.init("..\\res\\shader"); //new shader
-
-	planet_transform.SetPos(glm::vec3(0.0, 0.0, 0.0));
+	//sets models starting position, rotation & scale
+	planet_transform.SetPos(glm::vec3(-3.4, 0.0, 0.0));
 	planet_transform.SetRot(glm::vec3(0.0, 0.0, 0.0));
 	planet_transform.SetScale(glm::vec3(sinf(0.1), sinf(0.1), sinf(0.1)));
+	
+	//Part of attempted skybox
+	/*
+	skybox.loadModel("..\\res\\cube.obj");
+	skyboxTex.skyboxInit("..\\res\\world.png");
+	skyShader.init("..\\res\\skyboxshader");
+	*/
 
 }
 
 void Main_Game_Class::gameLoop()
 {
+	//enusres all necessary parts are used when game is running
 	while (_gameState != GameState::EXIT)
 	{
 		processInput();
 		drawGame();
 		update();
 		collision(player.getSpherePos(), player.getSphereRadius(), obstacle.getSpherePos(), obstacle.getSphereRadius());
+		collision(planet.getSpherePos(), planet.getSphereRadius(), obstacle.getSpherePos(), obstacle.getSphereRadius());
 		playAudio(bkgMusic, glm::vec3(0.0f, 0.0f, 0.0f));
 	}
 }
@@ -96,23 +103,25 @@ void Main_Game_Class::update()
 {
 	if (_gameState == GameState::FORWARD)// if key is pressed then move forward
 	{
+		//move player based on their rotation and the speed it goes at
 		playerPosX += sin((counterX)) * counterSpeed;
 		playerPosY += cos((counterX)) * counterSpeed;
-
+		//uses the variables to actually transform the player position
 		transform.SetPos(glm::vec3(playerPosX, playerPosY, 0.0));
+		//increase speed in positive direction, but not higher than a set max
 		counterSpeed = counterSpeed + 0.1f;
 		if (counterSpeed > 0.1) { counterSpeed = 0.1; }
-		//myCamera.init_Game_Camera(glm::vec3(playerPosX, playerPosY, -12), 70.0f, (float)_gameDisplay.getWidth() / _gameDisplay.getHeight(), 0.01f, 1000.0f); //move cam with player
 	}
 	else if (_gameState == GameState::BACK)// if key is pressed then move back
 	{
+		//move player based on their rotation and the speed it goes at
 		playerPosX -= sin((counterX)) * -counterSpeed;
 		playerPosY -= cos((counterX)) * -counterSpeed;
-		
+		//uses the variables to actually transform the player position
 		transform.SetPos(glm::vec3(playerPosX, playerPosY, 0.0));
+		//increase speed in positive direction, but not higher than a set max
 		counterSpeed = counterSpeed - 0.1f;
 		if (counterSpeed < -0.1) { counterSpeed = -0.1; }
-		//myCamera.init_Game_Camera(glm::vec3(playerPosX, playerPosY, -12), 70.0f, (float)_gameDisplay.getWidth() / _gameDisplay.getHeight(), 0.01f, 1000.0f); //move cam with player
 	}
 	else if (_gameState == GameState::LEFT)// if key is pressed then turn left
 	{
@@ -124,35 +133,43 @@ void Main_Game_Class::update()
 		transform.SetRot(glm::vec3(0.0, 0.0, counterX * -1));
 		counterX = counterX - 0.1f;
 	}
-
+	//updates the sphere data for the player to ensure colision detection
 	player.updateSphereData(*transform.GetPos(), 0.5f);
-
-	if (obstaclePosY < 5)
+	//moves the obstacle via the Y/Z as long as it is within the appropriate boundries
+	if (obstaclePosY < 6 && obstaclePosZ < 6)
 	{
-		obstaclePosX += sin(obstacleRot) * speed;
-		obstaclePosY += cos(obstacleRot) * speed;
-	}
-	else if(obstaclePosY>=5 || obstaclePosY<=-6)
-	{
-		obstaclePosY = -5;
-		obstaclePosX = 1 * (rand() % 5 + 1);
-		if ((rand() % 2 + 1) == 1)
+		if (randDir == 1) 
 		{
-			obstaclePosX = obstaclePosX * -1;
+			obstaclePosY += speed;
+		}
+		else
+		{
+			obstaclePosZ += speed;
 		}
 	}
+	else if(obstaclePosY>=5 || obstaclePosY<=-6 || obstaclePosZ >= 5 || obstaclePosZ <= -6)
+	{
+		respawn(false,false,true); //respawns obstacle if it leaves certain boundries
+	}
+	//rotates the obstacle for asthetic purposes
+	obstacleRot += 0.1;
 
-	planetPosX += sin(planetRot) * 0.01;
-	planetPosY += cos(planetRot) * 0.01;
+	//moves the planet around in an orbit while also rotating the planet itself
+	planetPosX += sin(planetOrbit) * 0.01;
+	planetPosZ += cos(planetOrbit) * 0.01;
+	planetOrbit += 0.003;
 	planetRot += 0.01;
 
-		obstacle_transform.SetRot(glm::vec3(0.0, 0.0, obstacleRot * -1));
-		obstacle_transform.SetPos(glm::vec3(obstaclePosX, obstaclePosY, 0.0));
-		obstacle.updateSphereData(*obstacle_transform.GetPos(), 0.5f);
-
-		planet_transform.SetRot(glm::vec3(planetRot * -1, planetRot * -1, 0.0));
-		planet_transform.SetPos(glm::vec3(1+planetPosX, 2+planetPosX, 0.0));
-		planet.updateSphereData(*planet_transform.GetPos(), 0.5f);
+	//where the movement for the obstacle is actually set, using the previously created values
+	//and updates it's sphere data for colisions
+	obstacle_transform.SetRot(glm::vec3(0.0, 0.0, obstacleRot * -1));
+	obstacle_transform.SetPos(glm::vec3(obstaclePosX, obstaclePosY, obstaclePosZ));
+	obstacle.updateSphereData(*obstacle_transform.GetPos(), 0.5f);
+	//where the movement for the planet is actually set, using the previously created values
+	//and updates it's sphere data for colisions
+	planet_transform.SetRot(glm::vec3(planetRot * -1, planetRot * -1, 0.0));
+	planet_transform.SetPos(glm::vec3(-3.4+planetPosX, 0.0, planetPosZ));
+	planet.updateSphereData(*planet_transform.GetPos(), 0.5f);
 		
 }
 
@@ -167,7 +184,7 @@ void Main_Game_Class::processInput()
 		case SDL_QUIT:
 			_gameState = GameState::EXIT;
 			break;
-		case SDL_KEYDOWN:
+		case SDL_KEYDOWN: //gets key inputs for movements
 			if (evnt.key.keysym.sym == SDLK_w)
 			{
 				_gameState = GameState::FORWARD;
@@ -184,7 +201,6 @@ void Main_Game_Class::processInput()
 			{
 				_gameState = GameState::RIGHT;
 			}
-
 				break;
 		case SDL_KEYUP:
 			_gameState = GameState::PLAY;
@@ -196,28 +212,76 @@ void Main_Game_Class::processInput()
 
 bool Main_Game_Class::collision(glm::vec3 m1Pos, float m1Rad, glm::vec3 m2Pos, float m2Rad)
 {
+	//distance equation
 	float distance = glm::sqrt((m2Pos.x - m1Pos.x) * (m2Pos.x - m1Pos.x) + (m2Pos.y - m1Pos.y) * (m2Pos.y - m1Pos.y) + (m2Pos.z - m1Pos.z) * (m2Pos.z - m1Pos.z));
-
+	//checks the distance between the 2 models and if they are in colision range then audio is played and the models are reset
 	if (distance < (m1Rad + m2Rad))
 	{
 		device.setlistener(myCamera.getPos(), m1Pos); //add bool to mesh
 		
 		playAudio(sfx, m1Pos); //play collision audio
-		
-		//reset obstacle position
-		obstaclePosY = -5;
-		obstaclePosX = 1 * (rand() % 5 + 1);
+		//ensures only certain objects are respawned, specifically the obstacle and what it
+		//colides with
 
-		if ((rand() % 2 + 1) == 1)
-		{
-			obstaclePosX = obstaclePosX * -1;
-		}
-		
+			if (m1Pos.x == playerPosX && m1Pos.y == playerPosY)
+			{
+				respawn(true, false, true);
+			}
+			else if (m1Pos.x == planetPosX && m1Pos.z == planetPosZ)
+			{
+				respawn(false, true, true);
+			}
+
 		return true;
 	}
 	else
 	{
 		return false;
+	}
+}
+
+void Main_Game_Class::respawn(bool playerRespawn, bool planetRespawn, bool obstacleRespawn)
+{
+		//respawns the obstacle to a random position on screen
+	if (obstacleRespawn == true)
+	{
+		randDir = (rand() % 2 + 1);
+		if (randDir == 1) //respawn for traveling the Y-axis
+		{
+			obstaclePosY = -5;
+			obstaclePosZ = 0;
+		}
+		else //respawn for travelling the Z-axis
+		{
+			obstaclePosZ = -5;
+			obstaclePosY = 1 * (rand() % 5 + 1);
+			if ((rand() % 2 + 1) == 1) //decides, randomly, if the y position is at the top or bottom
+			{
+				obstaclePosY = obstaclePosY * -1;
+			}
+		}
+		obstaclePosX = 1 * (rand() % 5 + 1);
+		if ((rand() % 2 + 1) == 1) //decides, randomly, if the x position will be at the right or left
+		{
+			obstaclePosX = obstaclePosX * -1;
+		}
+	}
+	//respawns the player at its origin point and resets the rotation
+	if (playerRespawn == true)
+	{
+		transform.SetPos(glm::vec3(0.0, 0.0, 0.0));
+		playerPosX = 0;
+		playerPosY = 0;
+		transform.SetRot(glm::vec3(0.0, 0.0, 0.0));
+		counterX = 0;
+	}
+	//repsawns the planet at its origin point and resets its orbit
+	if (planetRespawn == true)
+	{
+		planet_transform.SetPos(glm::vec3(-3.4, 0.0, 0.0));
+		planetPosX = 0;
+		planetPosZ = 0;
+		planetOrbit = 0;
 	}
 }
 
@@ -258,9 +322,18 @@ void Main_Game_Class::drawGame()
 	shader.Update(planet_transform, myCamera);
 	texture3.Bind(0);
 	planet.draw();
-	
+
+	//atempt from skybox
+	/*
+	skyShader.Bind();
+	skyShader.Update(transform, myCamera);
+	skyboxTex.Bind(0);
+	skybox.draw();
+	*/
+
 	glEnableClientState(GL_COLOR_ARRAY);
 	glEnd();
+
 
 	_gameDisplay.swapBuffer();
 }

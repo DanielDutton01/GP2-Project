@@ -82,11 +82,14 @@
     <None Include="..\res\shader.vert">
       <Filter>Resource Files</Filter>
     </None>
+    <None Include="..\res\skyboxshader.frag">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="..\res\skyboxshader.vert">
+      <Filter>Resource Files</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
-    <Object Include="..\res\monkey3.obj">
-      <Filter>Resource Files</Filter>
-    </Object>
     <Object Include="..\res\Rocket.obj">
       <Filter>Resource Files</Filter>
     </Object>
@@ -94,6 +97,9 @@
       <Filter>Resource Files</Filter>
     </Object>
     <Object Include="..\res\Planet.obj">
+      <Filter>Resource Files</Filter>
+    </Object>
+    <Object Include="..\res\cube.obj">
       <Filter>Resource Files</Filter>
     </Object>
   </ItemGroup>

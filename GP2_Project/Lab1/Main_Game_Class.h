@@ -19,6 +19,10 @@ public:
 
 	void run();
 
+	Camera_Transform transform;
+	Camera_Transform obstacle_transform;
+	Camera_Transform planet_transform;
+
 private:
 
 	void initSystems();
@@ -27,11 +31,16 @@ private:
 	void drawGame();
 	void update();
 	bool collision(glm::vec3 m1Pos, float m1Rad, glm::vec3 m2Pos, float m2Rad);
+	void respawn(bool player, bool planet, bool obstacle);
 	void playAudio(unsigned int Source, glm::vec3 pos);
 
 	Game_Display_Class _gameDisplay;
 	GameState _gameState;
 	Game_Camera myCamera;
+
+	Game_Mesh_Class skybox;
+	Game_Texture_Class skyboxTex;
+	Game_Shader_Class skyShader;
 
 	Game_Mesh_Class player;
 	Game_Texture_Class texture;
@@ -54,20 +63,21 @@ private:
 
 	float obstaclePosX;
 	float obstaclePosY;
+	float obstaclePosZ;
 	float obstacleRot;
 	float obstacleScale;
+	int randDir = 1;
 
 	Game_Mesh_Class planet;
 	Game_Texture_Class texture3;
 	Game_Shader_Class shader3;
 
 	float planetPosX;
-	float planetPosY;
+	float planetPosZ;
 	float planetRot;
+	float planetOrbit;
 	float planetScale;
 
 	float counterX;
 	float counterSpeed;
 };
-
-
