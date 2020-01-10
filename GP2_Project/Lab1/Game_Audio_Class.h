@@ -10,7 +10,7 @@
 #include <fstream>
 #include <SDL\SDL.h>
 #include <glm/gtc/type_ptr.hpp>
-
+//used for game audio
 class Game_Audio_Class
 {
 	struct data {
@@ -41,6 +41,7 @@ class Game_Audio_Class
 public:
 	Game_Audio_Class();
 	~Game_Audio_Class();
+	//functions used to control audio in main game class
 	unsigned int loadSound(const char* filename);
 	void deleteSound(unsigned int id);
 	void playSound(unsigned int id);

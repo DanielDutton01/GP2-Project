@@ -10,8 +10,9 @@ public:
 
 	void Bind(); //Set gpu to use our shaders
 	void Update(const Camera_Transform& transform, const Game_Camera& camera);
-	void init(const std::string& filename);
+	void init(const std::string& filename); //initialises shaders
 
+	//functions used to control the shader class in main game class
 	std::string Game_Shader_Class::LoadShader(const std::string& fileName);
 	void Game_Shader_Class::CheckShaderError(GLuint shader, GLuint flag, bool isProgram, const std::string& errorMessage);
 	GLuint Game_Shader_Class::CreateShader(const std::string& text, unsigned int type);
@@ -25,7 +26,6 @@ private:
 	enum
 	{
 		TRANSFORM_U,
-
 		NUM_UNIFORMS
 	};
 

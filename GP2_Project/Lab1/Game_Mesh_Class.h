@@ -3,7 +3,7 @@
 #include <GL\glew.h>
 #include <string>
 #include "obj_loader.h"
-
+//used to hold simple mesh data and can make simple shapes
 class Vertex_Class
 {
 public:
@@ -23,7 +23,7 @@ private:
 	glm::vec2 texCoord;
 	glm::vec3 normal;
 };
-
+//information concerning the sphere for collisions
 struct Sphere
 {
 public:
@@ -52,13 +52,13 @@ private:
 	glm::vec3 pos;
 	float radius;
 };
-
+//class for game meshes
 class Game_Mesh_Class
 {
 public:
 	Game_Mesh_Class();
 	~Game_Mesh_Class();
-
+	//functions used to control/alter mesh class in main game class
 	void draw();
 	void init(Vertex_Class* vertices, unsigned int numVertices, unsigned int* indices, unsigned int numIndices);
 	void loadModel(const std::string& filename);
@@ -78,7 +78,7 @@ private:
 		NUM_BUFFERS
 	};
 
-	Sphere meshSphere;
+	Sphere meshSphere; //sphere for collisions
 	GLuint vertexArrayObject;
 	GLuint vertexArrayBuffers[NUM_BUFFERS]; // create our array of buffers
 	unsigned int drawCount; //how much of the vertexArrayObject do we want to draw

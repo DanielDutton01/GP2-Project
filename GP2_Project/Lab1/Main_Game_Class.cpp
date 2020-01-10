@@ -2,16 +2,12 @@
 #include <iostream>
 #include <string>
 
-Vertex_Class vertices[] = { Vertex_Class(glm::vec3(-0.5, -0.5, 0), glm::vec2(0.0, 0.0)),
-				Vertex_Class(glm::vec3(0, 0.5, 0), glm::vec2(0.5, 1.0)),
-				Vertex_Class(glm::vec3(0.5, -0.5, 0), glm::vec2(1.0, 0.0)) };
-
-unsigned int indices[] = { 0, 1, 2 };
-
 Main_Game_Class::Main_Game_Class()
 {
-	_gameState = GameState::PLAY;
+	//variables are initialised appropriately
+	_gameState = GameState::PLAY; //state is set to play
 	Game_Display_Class* _gameDisplay = new Game_Display_Class(); //new display
+	//models, textures, shaders and audio
 	Game_Mesh_Class* player();
 	Game_Mesh_Class* npc();
 	Game_Mesh_Class* planet();
@@ -21,9 +17,10 @@ Main_Game_Class::Main_Game_Class()
 	Game_Shader_Class* shader2();
 	Game_Texture_Class* texture3();
 	Game_Shader_Class* shader3();
-	Game_Mesh_Class* skybox();
+	//attempted skybox
+	/*Game_Mesh_Class* skybox();
 	Game_Texture_Class* skyboxTex();
-	Game_Shader_Class* skyShader();
+	Game_Shader_Class* skyShader();*/
 	Game_Audio_Class* device();
 }
 
@@ -31,6 +28,7 @@ Main_Game_Class::~Main_Game_Class()
 {
 }
 
+//runs the game
 void Main_Game_Class::run()
 {
 	initSystems();
@@ -39,10 +37,11 @@ void Main_Game_Class::run()
 
 void Main_Game_Class::initSystems()
 {
-	_gameDisplay.initDisplay();
+	_gameDisplay.initDisplay(); //initalises the display
 
 	myCamera.init_Game_Camera(glm::vec3(0, 0, -12), 70.0f, (float)_gameDisplay.getWidth() / _gameDisplay.getHeight(), 0.01f, 1000.0f);
-	counterX = 0.0f;
+	//starts the speeds for the models
+	counterX = 0.0f; 
 	counterSpeed = 0.0f;
 	//sets the audio to the appropriate files
 	bkgMusic = device.loadSound("..\\res\\bkgMusic.wav");
@@ -92,14 +91,14 @@ void Main_Game_Class::gameLoop()
 	{
 		processInput();
 		drawGame();
-		update();
+		Update();
 		collision(player.getSpherePos(), player.getSphereRadius(), obstacle.getSpherePos(), obstacle.getSphereRadius());
 		collision(planet.getSpherePos(), planet.getSphereRadius(), obstacle.getSpherePos(), obstacle.getSphereRadius());
 		playAudio(bkgMusic, glm::vec3(0.0f, 0.0f, 0.0f));
 	}
 }
 
-void Main_Game_Class::update()
+void Main_Game_Class::Update()
 {
 	if (_gameState == GameState::FORWARD)// if key is pressed then move forward
 	{
@@ -181,7 +180,7 @@ void Main_Game_Class::processInput()
 	{
 		switch (evnt.type)
 		{
-		case SDL_QUIT:
+		case SDL_QUIT: //quits the game
 			_gameState = GameState::EXIT;
 			break;
 		case SDL_KEYDOWN: //gets key inputs for movements
@@ -202,7 +201,7 @@ void Main_Game_Class::processInput()
 				_gameState = GameState::RIGHT;
 			}
 				break;
-		case SDL_KEYUP:
+		case SDL_KEYUP: //sets game back to default state
 			_gameState = GameState::PLAY;
 				break;
 		}
@@ -284,26 +283,18 @@ void Main_Game_Class::respawn(bool playerRespawn, bool planetRespawn, bool obsta
 		planetOrbit = 0;
 	}
 }
-
+//plays sounds
 void Main_Game_Class::playAudio(unsigned int Source, glm::vec3 pos)
 {
-
 	ALint state;
 	alGetSourcei(Source, AL_SOURCE_STATE, &state);
 
-	/*
-	Possible values of state
-	AL_INITIAL
-	AL_STOPPED
-	AL_PLAYING
-	AL_PAUSED
-	*/
 	if (AL_PLAYING != state)
 	{
 		device.playSound(Source, pos);
 	}
 }
-
+//draw the game to the screen/display
 void Main_Game_Class::drawGame()
 {
 	_gameDisplay.clearDisplay(0.0f, 0.0f, 0.0f, 1.0f);
@@ -333,7 +324,6 @@ void Main_Game_Class::drawGame()
 
 	glEnableClientState(GL_COLOR_ARRAY);
 	glEnd();
-
 
 	_gameDisplay.swapBuffer();
 }

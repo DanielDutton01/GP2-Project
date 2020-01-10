@@ -1,7 +1,6 @@
 #include "Game_Mesh_Class.h"
 #include <vector>
-
-
+//initialises meshes/models
 void Game_Mesh_Class::init(Vertex_Class* vertices, unsigned int numVertices, unsigned int* indices, unsigned int numIndices)
 {
 	IndexedModel model;
@@ -18,11 +17,9 @@ void Game_Mesh_Class::init(Vertex_Class* vertices, unsigned int numVertices, uns
 
 	initModel(model);
 }
-
-
+//uses init to initalise a model
 void Game_Mesh_Class::initModel(const IndexedModel& model)
 {
-
 	drawCount = model.indices.size();
 
 	glGenVertexArrays(1, &vertexArrayObject); //generate a vertex array and store it in the VAO
@@ -50,12 +47,12 @@ void Game_Mesh_Class::initModel(const IndexedModel& model)
 
 	glBindVertexArray(0); // unbind our VAO
 }
-
+//initialise variables
 Game_Mesh_Class::Game_Mesh_Class()
 {
-	drawCount = NULL;
+	drawCount = NULL; //set draw count to not equal anything
 }
-
+//loads appropriate model
 void Game_Mesh_Class::loadModel(const std::string& filename)
 {
 	IndexedModel model = OBJModel(filename).ToIndexedModel();
@@ -66,17 +63,14 @@ Game_Mesh_Class::~Game_Mesh_Class()
 {
 	glDeleteVertexArrays(1, &vertexArrayObject); // delete arrays
 }
-
+//draws a model
 void Game_Mesh_Class::draw()
 {
 	glBindVertexArray(vertexArrayObject);
-
 	glDrawElements(GL_TRIANGLES, drawCount, GL_UNSIGNED_INT, 0);
-	//glDrawArrays(GL_TRIANGLES, 0, drawCount);
-
 	glBindVertexArray(0);
 }
-
+//updates the sphere data for collisions
 void Game_Mesh_Class::updateSphereData(glm::vec3 pos, float radius)
 {
 	meshSphere.SetPos(pos);

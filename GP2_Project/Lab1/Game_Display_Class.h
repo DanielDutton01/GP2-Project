@@ -11,6 +11,7 @@ class Game_Display_Class
 public:
 	Game_Display_Class();
 	~Game_Display_Class();
+	//functions used to initialise and control display
 	void initDisplay();
 	void swapBuffer();
 	void clearDisplay(float r, float g, float b, float a);
@@ -20,11 +21,11 @@ public:
 
 private:
 
-	void returnError(std::string errorString);
+	void returnError(std::string errorString); //used to check for errors
 
 	SDL_GLContext glContext; //global variable to hold the context
 	SDL_Window* sdlWindow; //holds pointer to out window
-	int screenWidth;
-	int screenHeight;
+	int screenWidth; //holds the screen width
+	int screenHeight; //holds the screen height
 };
 

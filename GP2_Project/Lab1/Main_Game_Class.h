@@ -16,31 +16,38 @@ class Main_Game_Class
 public:
 	Main_Game_Class();
 	~Main_Game_Class();
-
+	
+	//variable that runs the game
 	void run();
 
+	//the transforms of the various models
 	Camera_Transform transform;
 	Camera_Transform obstacle_transform;
 	Camera_Transform planet_transform;
 
 private:
-
+	//all the private functions used 
 	void initSystems();
 	void processInput();
 	void gameLoop();
 	void drawGame();
-	void update();
+	void Update();
 	bool collision(glm::vec3 m1Pos, float m1Rad, glm::vec3 m2Pos, float m2Rad);
 	void respawn(bool player, bool planet, bool obstacle);
 	void playAudio(unsigned int Source, glm::vec3 pos);
-
+	
 	Game_Display_Class _gameDisplay;
 	GameState _gameState;
 	Game_Camera myCamera;
 
+	//from skybox attempt
+	/*
 	Game_Mesh_Class skybox;
 	Game_Texture_Class skyboxTex;
 	Game_Shader_Class skyShader;
+	*/
+
+	//the variable for models, model positions/rotation/scale, textures, shaders and sounds
 
 	Game_Mesh_Class player;
 	Game_Texture_Class texture;

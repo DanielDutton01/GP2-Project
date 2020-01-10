@@ -1,16 +1,16 @@
 #include "Game_Audio_Class.h"
-
-
+//initiailses variables
 Game_Audio_Class::Game_Audio_Class()
 {
 	device = alcOpenDevice(NULL); //open sound card
+	//send error message if device doesn't exist
 	if (device == NULL)
 	{
 		std::cout << "cannot open sound card" << std::endl;
 	}
 
 	context = alcCreateContext(device, NULL);
-
+	//send error message if context doesn't exist
 	if (context == NULL)
 	{
 		std::cout << "cannot open context" << std::endl;
@@ -18,7 +18,7 @@ Game_Audio_Class::Game_Audio_Class()
 
 	alcMakeContextCurrent(context);
 }
-
+//destructs, deletes variables
 Game_Audio_Class::~Game_Audio_Class()
 {
 	for (unsigned int i = 0; i < datas.size(); i++)
@@ -33,13 +33,13 @@ Game_Audio_Class::~Game_Audio_Class()
 	alcDestroyContext(context);
 	alcCloseDevice(device);
 }
-
+//checks if big endian or small endian
 bool Game_Audio_Class::isBigEndian()
 {
 	int a = 1;
 	return !((char*)&a)[0];
 }
-
+//converts to intger
 int Game_Audio_Class::convertToInt(char* buffer, int length)
 {
 	int a = 0;
@@ -51,7 +51,7 @@ int Game_Audio_Class::convertToInt(char* buffer, int length)
 			((char*)&a)[3 - i] = buffer[i];
 	return a;
 }
-
+//loads WAV file and creates sound data for load sound
 char* Game_Audio_Class::loadWAV(const char* fn, int& chan, int& samplerate, int& bps, int& size)
 {
 	char buffer[4];
@@ -78,7 +78,7 @@ char* Game_Audio_Class::loadWAV(const char* fn, int& chan, int& samplerate, int&
 	in.read(soundData, size);
 	return soundData;
 }
-
+//loads a .WAV sound from a file
 unsigned int Game_Audio_Class::loadSound(const char* filename)
 {
 	bool found = false;
@@ -135,20 +135,22 @@ unsigned int Game_Audio_Class::loadSound(const char* filename)
 
 void Game_Audio_Class::deleteSound(unsigned int id)
 {}
-
+//plays sound
 void Game_Audio_Class::playSound(unsigned int id)
 {
 	alSourcePlay(id);
-}
+}//plays sound from a position
 void Game_Audio_Class::playSound(unsigned int id, glm::vec3& pos)
 {
 	alSource3f(id, AL_POSITION, pos.x, pos.y, pos.z);
 	alSourcePlay(id);
 }
+//sotps a sound
 void Game_Audio_Class::stopSound(unsigned int id)
 {
 	alSourceStop(id);
 }
+//sets the listener of the sound
 void Game_Audio_Class::setlistener(glm::vec3& pos, glm::vec3& camLookAt)
 {
 	alListener3f(AL_POSITION, pos.x, pos.y, -pos.z);

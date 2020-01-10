@@ -5,7 +5,7 @@
 Game_Shader_Class::Game_Shader_Class()
 {
 }
-
+//initialises shaders
 void Game_Shader_Class::init(const std::string& filename)
 {
 	program = glCreateProgram(); // create shader program (openGL saves as ref number)
@@ -43,14 +43,14 @@ void Game_Shader_Class::Bind()
 {
 	glUseProgram(program); //installs the program object specified by program as part of rendering state
 }
-
+//creates the mvp and specifies the value of uniform variable
 void Game_Shader_Class::Update(const Camera_Transform& transform, const Game_Camera& camera)
 {
 	glm::mat4 mvp = camera.GetViewProjection() * transform.GetModel();
 	glUniformMatrix4fv(uniforms[TRANSFORM_U], 1, GLU_FALSE, &mvp[0][0]);
 }
 
-
+//creates shader
 GLuint Game_Shader_Class::CreateShader(const std::string& text, unsigned int type)
 {
 	GLuint shader = glCreateShader(type); //create shader based on specified type
@@ -70,31 +70,31 @@ GLuint Game_Shader_Class::CreateShader(const std::string& text, unsigned int typ
 
 	return shader;
 }
-
+//loads a shader based from a file
 std::string Game_Shader_Class::LoadShader(const std::string& fileName)
 {
 	std::ifstream file;
-	file.open((fileName).c_str());
-
+	file.open((fileName).c_str()); //opens the file
+	//creates output
 	std::string output;
 	std::string line;
 
-	if (file.is_open())
+	if (file.is_open()) //check if file is open
 	{
 		while (file.good())
 		{
 			getline(file, line);
-			output.append(line + "\n");
+			output.append(line + "\n"); //appends the output to have the line
 		}
 	}
 	else
 	{
-		std::cerr << "Unable to load shader: " << fileName << std::endl;
+		std::cerr << "Unable to load shader: " << fileName << std::endl; //shows error if shader isn't loaded
 	}
 
 	return output;
 }
-
+//used to check for errors and displays message if there are
 void Game_Shader_Class::CheckShaderError(GLuint shader, GLuint flag, bool isProgram, const std::string& errorMessage)
 {
 	GLint success = 0;
